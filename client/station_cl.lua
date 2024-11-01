@@ -60,7 +60,7 @@ if Config.PlayerOwnedGasStationsEnabled then -- This is so Player Owned Gas Stat
             FreezeEntityPosition(ped, true)
             SetEntityInvincible(ped, true)
             SetBlockingOfNonTemporaryEvents(ped, true)
-            exports['qb-target']:AddTargetEntity(ped, {
+            exports['qb-target']:addEntity(ped, {
                 options = {
                     {
                         type = "client",
