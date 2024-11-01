@@ -732,33 +732,62 @@ if Config.ElectricVehicleCharging then
         TargetResource = 'ox_target'
     end
 
-    exports[TargetResource]:AddTargetModel('electric_charger', {
-        options = {
-            {
-                num = 1,
-                type = "client",
-                event = "cdn-fuel:client:grabelectricnozzle",
-                icon = "fas fa-bolt",
-                label = locale("grab_electric_nozzle"),
-                canInteract = function()
-                    if not IsHoldingElectricNozzle() and not IsPedInAnyVehicle(PlayerPedId()) then
-                        return true
-                    end
+    local modelOptions = {
+        {
+            num = 1,
+            type = "client",
+            event = "cdn-fuel:client:grabelectricnozzle",
+            icon = "fas fa-bolt",
+            label = locale("grab_electric_nozzle"),
+            canInteract = function()
+                if not IsHoldingElectricNozzle() and not IsPedInAnyVehicle(PlayerPedId()) then
+                    return true
                 end
-            },
-            {
-                num = 2,
-                type = "client",
-                event = "cdn-fuel:client:returnnozzle",
-                icon = "fas fa-hand",
-                label = locale("return_nozzle"),
-                canInteract = function()
-                    if IsHoldingElectricNozzle() and not refueling then
-                        return true
-                    end
-                end
-            },
+            end
         },
-        distance = 2.0
-    })
+        {
+            num = 2,
+            type = "client",
+            event = "cdn-fuel:client:returnnozzle",
+            icon = "fas fa-hand",
+            label = locale("return_nozzle"),
+            canInteract = function()
+                if IsHoldingElectricNozzle() and not refueling then
+                    return true
+                end
+            end
+        }
+    }
+
+    exports.ox_target:addModel('electric_charger', modelOptions)
+
+    -- exports[TargetResource]:addModel('electric_charger', {
+    --     options = {
+    --         {
+    --             num = 1,
+    --             type = "client",
+    --             event = "cdn-fuel:client:grabelectricnozzle",
+    --             icon = "fas fa-bolt",
+    --             label = locale("grab_electric_nozzle"),
+    --             canInteract = function()
+    --                 if not IsHoldingElectricNozzle() and not IsPedInAnyVehicle(PlayerPedId()) then
+    --                     return true
+    --                 end
+    --             end
+    --         },
+    --         {
+    --             num = 2,
+    --             type = "client",
+    --             event = "cdn-fuel:client:returnnozzle",
+    --             icon = "fas fa-hand",
+    --             label = locale("return_nozzle"),
+    --             canInteract = function()
+    --                 if IsHoldingElectricNozzle() and not refueling then
+    --                     return true
+    --                 end
+    --             end
+    --         },
+    --     },
+    --     distance = 2.0
+    -- })
 end
