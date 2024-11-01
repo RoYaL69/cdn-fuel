@@ -56,7 +56,7 @@ if Config.PlayerOwnedGasStationsEnabled then -- This is so Player Owned Gas Stat
         local src = source
         local Player = QBCore.Functions.GetPlayer(src)
         local CostOfStation = Config.GasStations[location].cost + GlobalTax(Config.GasStations[location].cost)
-        if Player.Functions.RemoveMoney("bank", CostOfStation, Lang:t("station_purchased_location_payment_label")..Config.GasStations[location].label) then
+        if Player.Functions.RemoveMoney("bank", CostOfStation, locale("station_purchased_location_payment_label")..Config.GasStations[location].label) then
             MySQL.Async.execute('UPDATE fuel_stations SET owned = ? WHERE `location` = ?', {1, location})
             MySQL.Async.execute('UPDATE fuel_stations SET owner = ? WHERE `location` = ?', {CitizenID, location})
         end
@@ -67,13 +67,13 @@ if Config.PlayerOwnedGasStationsEnabled then -- This is so Player Owned Gas Stat
         local Player = QBCore.Functions.GetPlayer(src)
         local GasStationCost = Config.GasStations[location].cost + GlobalTax(Config.GasStations[location].cost)
         local SalePrice = math.percent(Config.GasStationSellPercentage, GasStationCost)
-        if Player.Functions.AddMoney("bank", SalePrice, Lang:t("station_sold_location_payment_label")..Config.GasStations[location].label) then
+        if Player.Functions.AddMoney("bank", SalePrice, locale("station_sold_location_payment_label")..Config.GasStations[location].label) then
             MySQL.Async.execute('UPDATE fuel_stations SET owned = ? WHERE `location` = ?', {0, location})
             MySQL.Async.execute('UPDATE fuel_stations SET owner = ? WHERE `location` = ?', {0, location})
-            TriggerClientEvent('QBCore:Notify', src, Lang:t("station_sold_success"), 'success')
+            TriggerClientEvent('QBCore:Notify', src, locale("station_sold_success"), 'success')
 
         else
-            TriggerClientEvent('QBCore:Notify', src, Lang:t("station_cannot_sell"), 'error')
+            TriggerClientEvent('QBCore:Notify', src, locale("station_cannot_sell"), 'error')
         end
     end)
 
@@ -82,10 +82,10 @@ if Config.PlayerOwnedGasStationsEnabled then -- This is so Player Owned Gas Stat
         local Player = QBCore.Functions.GetPlayer(src)
         local setamount = (StationBalance - amount)
         if Config.FuelDebug then print("Attempting to withdraw $"..amount.." from Location #"..location.."'s Balance!") end
-        if amount > StationBalance then TriggerClientEvent('QBCore:Notify', src, Lang:t("station_withdraw_too_much"), 'success') return end
+        if amount > StationBalance then TriggerClientEvent('QBCore:Notify', src, locale("station_withdraw_too_much"), 'success') return end
         MySQL.Async.execute('UPDATE fuel_stations SET balance = ? WHERE `location` = ?', {setamount, location})
-        Player.Functions.AddMoney("bank", amount, Lang:t("station_withdraw_payment_label")..Config.GasStations[location].label)
-        TriggerClientEvent('QBCore:Notify', src, Lang:t("station_success_withdrew_1")..amount..Lang:t("station_success_withdrew_2"), 'success')
+        Player.Functions.AddMoney("bank", amount, locale("station_withdraw_payment_label")..Config.GasStations[location].label)
+        TriggerClientEvent('QBCore:Notify', src, locale("station_success_withdrew_1")..amount..locale("station_success_withdrew_2"), 'success')
     end)
 
     RegisterNetEvent('cdn-fuel:station:server:Deposit', function(amount, location, StationBalance)
@@ -93,11 +93,11 @@ if Config.PlayerOwnedGasStationsEnabled then -- This is so Player Owned Gas Stat
         local Player = QBCore.Functions.GetPlayer(src)
         local setamount = (StationBalance + amount)
         if Config.FuelDebug then print("Attempting to deposit $"..amount.." to Location #"..location.."'s Balance!") end
-        if Player.Functions.RemoveMoney("bank", amount, Lang:t("station_deposit_payment_label")..Config.GasStations[location].label) then
+        if Player.Functions.RemoveMoney("bank", amount, locale("station_deposit_payment_label")..Config.GasStations[location].label) then
             MySQL.Async.execute('UPDATE fuel_stations SET balance = ? WHERE `location` = ?', {setamount, location})
-            TriggerClientEvent('QBCore:Notify', src, Lang:t("station_success_deposit_1")..amount..Lang:t("station_success_deposit_2"), 'success')
+            TriggerClientEvent('QBCore:Notify', src, locale("station_success_deposit_1")..amount..locale("station_success_deposit_2"), 'success')
         else
-            TriggerClientEvent('QBCore:Notify', src, Lang:t("station_cannot_afford_deposit")..amount.."!", 'success')
+            TriggerClientEvent('QBCore:Notify', src, locale("station_cannot_afford_deposit")..amount.."!", 'success')
         end
     end)
 
@@ -106,7 +106,7 @@ if Config.PlayerOwnedGasStationsEnabled then -- This is so Player Owned Gas Stat
         if Config.FuelDebug then print("Toggling Emergency Shutoff Valves for Location #"..location) end
         Config.GasStations[location].shutoff = not Config.GasStations[location].shutoff
         Wait(5)
-        TriggerClientEvent('QBCore:Notify', src, Lang:t("station_shutoff_success"), 'success')
+        TriggerClientEvent('QBCore:Notify', src, locale("station_shutoff_success"), 'success')
         if Config.FuelDebug then print('Successfully altered the shutoff valve state for location #'..location..'!') end
         if Config.FuelDebug then print(Config.GasStations[location].shutoff) end
     end)
@@ -115,7 +115,7 @@ if Config.PlayerOwnedGasStationsEnabled then -- This is so Player Owned Gas Stat
         local src = source
         if Config.FuelDebug then print('Attempting to update Location #'..location.."'s Fuel Price to a new price: $"..fuelprice) end
         MySQL.Async.execute('UPDATE fuel_stations SET fuelprice = ? WHERE `location` = ?', {fuelprice, location})
-        TriggerClientEvent('QBCore:Notify', src, Lang:t("station_fuel_price_success")..fuelprice..Lang:t("station_per_liter"), 'success')
+        TriggerClientEvent('QBCore:Notify', src, locale("station_fuel_price_success")..fuelprice..locale("station_per_liter"), 'success')
     end)
 
     RegisterNetEvent('cdn-fuel:station:server:updatereserves', function(reason, amount, currentlevel, location)
@@ -163,7 +163,7 @@ if Config.PlayerOwnedGasStationsEnabled then -- This is so Player Owned Gas Stat
                 if v.fuel + amount > Config.MaxFuelReserves then
                     ReserveBuyPossible = false
                     if Config.FuelDebug then print("Purchase is not possible, as reserves will be greater than the maximum amount!") end
-                    TriggerClientEvent('QBCore:Notify', src, Lang:t("station_reserves_over_max"), 'error')
+                    TriggerClientEvent('QBCore:Notify', src, locale("station_reserves_over_max"), 'error')
                 elseif v.fuel + amount <= Config.MaxFuelReserves then
                     ReserveBuyPossible = true
                     OldAmount = v.fuel
@@ -192,7 +192,7 @@ if Config.PlayerOwnedGasStationsEnabled then -- This is so Player Owned Gas Stat
             end
 
         elseif ReserveBuyPossible then
-            TriggerClientEvent('QBCore:Notify', src, Lang:t("not_enough_money"), 'error')
+            TriggerClientEvent('QBCore:Notify', src, locale("not_enough_money"), 'error')
         end
     end)
 
@@ -202,7 +202,7 @@ if Config.PlayerOwnedGasStationsEnabled then -- This is so Player Owned Gas Stat
             if FuelPickupSent[location] then
                 local cid = QBCore.Functions.GetPlayer(src).PlayerData.citizenid
                 MySQL.Async.execute('UPDATE fuel_stations SET fuel = ? WHERE `location` = ?', {FuelPickupSent[location]['refuelAmount'], location})
-                TriggerClientEvent('QBCore:Notify', src, Lang:t("fuel_pickup_failed"), 'success')
+                TriggerClientEvent('QBCore:Notify', src, locale("fuel_pickup_failed"), 'success')
                 -- This will print player information just in case someone figures out a way to exploit this.
                 print("User encountered an error with fuel pickup, so we are updating the fuel level anyways, and cancelling the pickup. SQL Execute Update: fuel_station level to: "..FuelPickupSent[location].refuelAmount.. " | Source: "..src.." | Citizen Id: "..cid..".")
                 FuelPickupSent[location] = nil
@@ -221,7 +221,7 @@ if Config.PlayerOwnedGasStationsEnabled then -- This is so Player Owned Gas Stat
             if FuelPickupSent[location] then
                 local cid = QBCore.Functions.GetPlayer(src).PlayerData.citizenid
                 MySQL.Async.execute('UPDATE fuel_stations SET fuel = ? WHERE `location` = ?', {FuelPickupSent[location].refuelAmount, location})
-                TriggerClientEvent('QBCore:Notify', src, string.format(Lang:t("fuel_pickup_success"), tostring(tonumber(FuelPickupSent[location].refuelAmount))), 'success')
+                TriggerClientEvent('QBCore:Notify', src, string.format(locale("fuel_pickup_success"), tostring(tonumber(FuelPickupSent[location].refuelAmount))), 'success')
                 -- This will print player information just in case someone figures out a way to exploit this.
                 if Config.FuelDebug then
                     print("User successfully dropped off fuel truck, so we are updating the fuel level and clearing the pickup table. SQL Execute Update: fuel_station level to: "..FuelPickupSent[location].refuelAmount.. " | Source: "..src.." | Citizen Id: "..cid..".")
@@ -241,7 +241,7 @@ if Config.PlayerOwnedGasStationsEnabled then -- This is so Player Owned Gas Stat
         if Config.FuelDebug then print('Attempting to set name for Location #'..location..' to: '..newName) end
         MySQL.Async.execute('UPDATE fuel_stations SET label = ? WHERE `location` = ?', {newName, location})
         if Config.FuelDebug then print('Successfully executed the previous SQL Update!') end
-        TriggerClientEvent('QBCore:Notify', src, Lang:t("station_name_change_success")..newName.."!", 'success')
+        TriggerClientEvent('QBCore:Notify', src, locale("station_name_change_success")..newName.."!", 'success')
         TriggerClientEvent('cdn-fuel:client:updatestationlabels', -1, location, newName)
     end)
 
