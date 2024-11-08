@@ -303,7 +303,7 @@ if Config.RenewedPhonePayment then
 				shouldRecieveDiscount = true
 			end
             if shouldRecieveDiscount == true and not QBCore.Functions.GetPlayerData().job.onduty and Config.EmergencyServicesDiscount['ondutyonly'] then
-                QBCore.Functions.Notify(locale("you_are_discount_eligible"), 'primary', 7500)
+                QBCore.Functions.Notify(locale("you_are_discount_eligible", Config.EmergencyServicesDiscount['discount']), 'primary', 7500)
 				shouldRecieveDiscount = false
 			end
 			if shouldRecieveDiscount then
@@ -631,7 +631,7 @@ RegisterNetEvent('cdn-fuel:client:FinalMenu', function(purchasetype)
 			shouldRecieveDiscount = true
 		end
 		if shouldRecieveDiscount == true and not QBCore.Functions.GetPlayerData().job.onduty and Config.EmergencyServicesDiscount['ondutyonly'] then
-			QBCore.Functions.Notify(locale("you_are_discount_eligible"), 'primary', 7500)
+			QBCore.Functions.Notify(locale("you_are_discount_eligible", Config.EmergencyServicesDiscount['discount']), 'primary', 7500)
 			shouldRecieveDiscount = false
 		end
 		if shouldRecieveDiscount then
@@ -953,7 +953,7 @@ RegisterNetEvent('cdn-fuel:client:RefuelVehicle', function(data)
 			shouldRecieveDiscount = true
 		end
 		if shouldRecieveDiscount == true and not QBCore.Functions.GetPlayerData().job.onduty and Config.EmergencyServicesDiscount['ondutyonly'] then
-			QBCore.Functions.Notify(locale("you_are_discount_eligible"), 'primary', 7500)
+			QBCore.Functions.Notify(locale("you_are_discount_eligible", Config.EmergencyServicesDiscount['discount']), 'primary', 7500)
 			shouldRecieveDiscount = false
 		end
 		if shouldRecieveDiscount then
@@ -1778,11 +1778,11 @@ RegisterNetEvent('cdn-syphoning:syphon:menu', function(itemData)
 
 		if Config.Ox.Inventory then
 			if tonumber(itemData.metadata.cdn_fuel) < 1 then nogas = true Nogasstring = locale("menu_syphon_empty") else nogas = false Nogasstring = locale("menu_syphon_refuel") end
-			if tonumber(itemData.metadata.cdn_fuel) == Config.SyphonKitCap then syphonfull = true Stealfuelstring = locale("menu_syphon_kit_full") elseif GetFuel(vehicle) < 1 then syphonfull = true Stealfuelstring = locale("menu_syphon_vehicle_empty") else syphonfull = false Stealfuelstring = locale("menu_syphon_allowed") end -- Disable Options based on item data
+			if tonumber(itemData.metadata.cdn_fuel) == Config.SyphonKitCap then syphonfull = true Stealfuelstring = locale("menu_syphon_kit_full", Config.SyphonKitCap) elseif GetFuel(vehicle) < 1 then syphonfull = true Stealfuelstring = locale("menu_syphon_vehicle_empty") else syphonfull = false Stealfuelstring = locale("menu_syphon_allowed") end -- Disable Options based on item data
 		else
 			if not itemData.info.gasamount then nogas = true Nogasstring = locale("menu_syphon_empty") end
 			if itemData.info.gasamount < 1 then nogas = true Nogasstring = locale("menu_syphon_empty") else nogas = false Nogasstring = locale("menu_syphon_refuel") end
-			if itemData.info.gasamount == Config.SyphonKitCap then syphonfull = true Stealfuelstring = locale("menu_syphon_kit_full") elseif GetFuel(vehicle) < 1 then syphonfull = true Stealfuelstring = locale("menu_syphon_vehicle_empty") else syphonfull = false Stealfuelstring = locale("menu_syphon_allowed") end -- Disable Options based on item data
+			if itemData.info.gasamount == Config.SyphonKitCap then syphonfull = true Stealfuelstring = locale("menu_syphon_kit_full", Config.SyphonKitCap) elseif GetFuel(vehicle) < 1 then syphonfull = true Stealfuelstring = locale("menu_syphon_vehicle_empty") else syphonfull = false Stealfuelstring = locale("menu_syphon_allowed") end -- Disable Options based on item data
 		end
 		if Config.Ox.Menu then
 			lib.registerContext({

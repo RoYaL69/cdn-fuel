@@ -101,7 +101,7 @@ if Config.ElectricVehicleCharging then
             end
 
             if shouldRecieveDiscount == true and not QBCore.Functions.GetPlayerData().job.onduty and Config.EmergencyServicesDiscount['ondutyonly'] then
-                QBCore.Functions.Notify(locale("you_are_discount_eligible"), 'primary', 7500)
+                QBCore.Functions.Notify(locale("you_are_discount_eligible", Config.EmergencyServicesDiscount['discount']), 'primary', 7500)
 				shouldRecieveDiscount = false
 			end
 
@@ -375,7 +375,7 @@ if Config.ElectricVehicleCharging then
             end
 
             if shouldRecieveDiscount == true and not QBCore.Functions.GetPlayerData().job.onduty and Config.EmergencyServicesDiscount['ondutyonly'] then
-                QBCore.Functions.Notify(locale("you_are_discount_eligible"), 'primary', 7500)
+                QBCore.Functions.Notify(locale("you_are_discount_eligible", Config.EmergencyServicesDiscount['discount']), 'primary', 7500)
 				shouldRecieveDiscount = false
 			end
 
@@ -633,7 +633,7 @@ if Config.ElectricVehicleCharging then
                 end
 
                 if shouldRecieveDiscount == true and not QBCore.Functions.GetPlayerData().job.onduty and Config.EmergencyServicesDiscount['ondutyonly'] then
-                    QBCore.Functions.Notify(locale("you_are_discount_eligible"), 'primary', 7500)
+                    QBCore.Functions.Notify(locale("you_are_discount_eligible", Config.EmergencyServicesDiscount['discount']), 'primary', 7500)
                     shouldRecieveDiscount = false
                 end
 

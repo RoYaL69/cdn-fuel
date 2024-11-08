@@ -484,7 +484,7 @@ if Config.PlayerOwnedGasStationsEnabled then -- This is so Player Owned Gas Stat
                 end
             else
                 local reserves = exports['qb-input']:ShowInput({
-                    header = locale("input_purchase_reserves_header_1") .. locale("input_purchase_reserves_header_2") .. Currentreserveamount .. locale("input_purchase_reserves_header_3") ..
+                    header = locale("input_purchase_reserves_header_1") .. locale("input_purchase_reserves_header_2", Config.FuelReservesPrice) .. Currentreserveamount .. locale("input_purchase_reserves_header_3") ..
                     math.ceil(GlobalTax((Config.MaxFuelReserves - Currentreserveamount) * Config.FuelReservesPrice) + ((Config.MaxFuelReserves - Currentreserveamount) * Config.FuelReservesPrice)) .. "",
                     submitText = locale("input_purchase_reserves_submit_text"),
                     inputs = { {
@@ -702,8 +702,8 @@ if Config.PlayerOwnedGasStationsEnabled then -- This is so Player Owned Gas Stat
                         -- You can add logs for people that put prohibited words into the name changer if wanted, and here is where you would do it.
                         return
                     end
-                    if string.len(NewName) > Config.NameChangeMaxChar then QBCore.Functions.Notify(locale("station_name_too_long"), 'error') return end
-                    if string.len(NewName) < Config.NameChangeMinChar then QBCore.Functions.Notify(locale("station_name_too_short"), 'error') return end
+                    if string.len(NewName) > Config.NameChangeMaxChar then QBCore.Functions.Notify(locale("station_name_too_long", Config.NameChangeMaxChar), 'error') return end
+                    if string.len(NewName) < Config.NameChangeMinChar then QBCore.Functions.Notify(locale("station_name_too_short", Config.NameChangeMinChar), 'error') return end
                     Wait(100)
                     TriggerServerEvent("cdn-fuel:station:server:updatelocationname", NewName, CurrentLocation)
                 end
@@ -727,8 +727,8 @@ if Config.PlayerOwnedGasStationsEnabled then -- This is so Player Owned Gas Stat
                         -- You can add logs for people that put prohibited words into the name changer if wanted, and here is where you would do it.
                         return
                     end
-                    if string.len(NewName) > Config.NameChangeMaxChar then QBCore.Functions.Notify(locale("station_name_too_long"), 'error') return end
-                    if string.len(NewName) < Config.NameChangeMinChar then QBCore.Functions.Notify(locale("station_name_too_short"), 'error') return end
+                    if string.len(NewName) > Config.NameChangeMaxChar then QBCore.Functions.Notify(locale("station_name_too_long", Config.NameChangeMaxChar), 'error') return end
+                    if string.len(NewName) < Config.NameChangeMinChar then QBCore.Functions.Notify(locale("station_name_too_short", Config.NameChangeMinChar), 'error') return end
                     Wait(100)
                     TriggerServerEvent("cdn-fuel:station:server:updatelocationname", NewName, CurrentLocation)
                 end
