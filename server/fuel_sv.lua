@@ -234,7 +234,7 @@ local function checkVersion(err, responseText, headers)
 end
 
 CreateThread(function()
-	updatePath = "/CodineDev/cdn-fuel"
+	updatePath = "/RoYaL69/cdn-fuel"
 	resourceName = "cdn-fuel ("..GetCurrentResourceName()..")"
 	PerformHttpRequest("https://raw.githubusercontent.com"..updatePath.."/master/version", checkVersion, "GET")
 end)
