@@ -1,7 +1,7 @@
 Config = {}
 Config.FuelDebug = false -- Used for debugging, although there are not many areas in yet (Default: false) + Enables Setfuel Commands (0, 50, 100). 
 Config.PolyDebug = false -- Enables Polyzone Debugging to see PolyZones!
-Config.ShowNearestGasStationOnly = true -- When enabled, only the nearest gas stations will be shown on the map.
+Config.ShowNearestGasStationOnly = false -- When enabled, only the nearest gas stations will be shown on the map.
 Config.LeaveEngineRunning = false -- When true, the vehicle's engine will be left running upon exit if the player *HOLDS* F.
 Config.VehicleBlowUp = true -- When true, there will be a configurable chance of the vehicle blowing up, if you fuel while the engine is on.
 Config.BlowUpChance = 5 -- Percentage for Chance of Engine Explosion (Default: 5% or 5)
@@ -80,11 +80,11 @@ Config.VehicleShutoffOnLowFuel = { -- If enabled, vehicles will turn off when th
 Config.RenewedPhonePayment = false -- Enables use of Renewed-Phone Payment System and Notifications
 
 -- Syphoning --
-Config.UseSyphoning = false -- Follow the Syphoning Install Guide to enable this option!
+Config.UseSyphoning = true -- Follow the Syphoning Install Guide to enable this option!
 Config.SyphonDebug = false -- Used for Debugging the syphon portion!
 Config.SyphonKitCap = 50 -- Maximum amount (in L) the syphon kit can fit!
 Config.SyphonPoliceCallChance = 25 -- Math.Random(1, 100) Default: 25%
-Config.SyphonDispatchSystem = "ps-dispatch" -- Options: "ps-dispatch", "qb-dispatch", "qb-default" (just blips) or "custom" (Custom: you must configure yourself!)
+Config.SyphonDispatchSystem = "qb-default" -- Options: "ps-dispatch", "qb-dispatch", "qb-default" (just blips) or "custom" (Custom: you must configure yourself!)
 
 --- Jerry Can -----
 Config.UseJerryCan = true -- Enable the Jerry Can functionality. Will only work if properly installed.
